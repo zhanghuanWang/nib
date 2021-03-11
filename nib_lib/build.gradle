@@ -1,25 +1,32 @@
-plugins {
-    id ("com.android.application")
-    id ("kotlin-android")
-    id ("kotlin-android-extensions")
-    id ("kotlin-kapt")
-}
+//plugins {
+//    id(Module.libAppOrLib)
+//    id("kotlin-android")
+//    id("kotlin-android-extensions")
+//    id("kotlin-kapt")
+//}
+
+apply plugin: Module.libAppOrLib
+apply plugin: "kotlin-android"
+apply plugin:"kotlin-android-extensions"
+apply plugin:"kotlin-kapt"
 
 android {
     compileSdkVersion(Versions.compileSdkVersion)
     buildToolsVersion(Versions.buildToolsVersion)
 
     defaultConfig {
-        applicationId(Module.appApplicationId)
+        if (Module.libIsApp) {
+            applicationId(Module.libApplicationId)
+        }
         minSdkVersion(Versions.minSdkVersion)
         targetSdkVersion(Versions.targetSdkVersion)
-        versionCode(Versions.versionCode)
-        versionName(Versions.versionName)
-        multiDexEnabled=true
+        versionCode(Versions.libVersionCode)
+        versionName(Versions.libVersionName)
+        multiDexEnabled = true
 
-        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
-
 
     compileOptions {
         sourceCompatibility(JavaVersion.VERSION_1_8)
@@ -32,11 +39,23 @@ android {
 //        enabled = true
 //    }
 
+    sourceSets {
+
+
+        main {
+
+            if (Module.libIsApp) {
+                manifest.srcFile 'src/main/app/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
     buildTypes {
         getByName("release") {
             minifyEnabled(false)
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -49,6 +68,7 @@ dependencies {
     implementation(Android.appcompat)
     implementation(Android.material)
     implementation(Android.constraintlayout)
+
     testImplementation("junit:junit:4.+")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")

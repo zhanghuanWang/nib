@@ -5,7 +5,7 @@ buildscript {
     repositories {
         gradlePluginPortal()
     }
-    dependencies { classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21") }
+    dependencies { classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21") }
 }
 dependencies {
     implementation(gradleKotlinDsl())
