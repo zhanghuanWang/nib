@@ -1,16 +1,14 @@
-apply {
-    plugin("kotlin")
+
+plugins {
+    `kotlin-dsl`
 }
-buildscript {
-    repositories {
-        gradlePluginPortal()
-    }
-    dependencies { classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21") }
-}
-dependencies {
-    implementation(gradleKotlinDsl())
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.4.21")
-}
+
 repositories {
-    gradlePluginPortal()
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+    maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+    maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
+    mavenCentral()
+    jcenter()
+    google()
 }

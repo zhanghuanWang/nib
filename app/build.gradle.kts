@@ -28,9 +28,8 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-//    dataBinding {
-//        enabled = true
-//    }
+
+    databinding.isEnabled = true
 
     buildTypes {
         getByName("release") {
@@ -43,6 +42,19 @@ android {
 }
 
 dependencies {
+
+    implementation(
+            fileTree(
+                    mapOf(
+                            "dir" to "libs",
+                            "include" to listOf("*.jar")
+                    )
+            )
+    )
+    implementation (kotlin(
+            "stdlib-jdk7",
+            org.jetbrains.kotlin.config.KotlinCompilerVersion.VERSION
+    ))
 
     implementation(Versions.kotlinStdLib)
     implementation(Android.coreKtx)

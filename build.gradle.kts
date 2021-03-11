@@ -6,13 +6,18 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath(Versions.androidToolsBuildGradle)
-        classpath(Versions.kotlinGradlePlugin)
+        classpath(Libs.androidToolsBuildGradle)
+        classpath(Libs.kotlinGradlePlugin)
     }
 }
 
 allprojects {
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
+
         google()
         jcenter()
     }
