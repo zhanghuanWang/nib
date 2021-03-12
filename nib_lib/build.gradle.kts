@@ -1,16 +1,21 @@
+import org.jetbrains.kotlin.cli.jvm.main
+
 plugins {
-    id ("com.android.application")
-    id ("kotlin-android")
-    id ("kotlin-android-extensions")
-    id ("kotlin-kapt")
+    id(Module.libAppOrLib)
+    id("kotlin-android")
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
 }
+
 
 android {
     compileSdkVersion(Apps.compile_sdk_version)
     buildToolsVersion(Apps.build_tools_version)
 
     defaultConfig {
-        applicationId(Module.appApplicationId)
+        if (Module.libIsApp) {
+            applicationId(Module.libApplicationId)
+        }
         minSdkVersion(Apps.min_sdk_version)
         targetSdkVersion(Apps.target_sdk_version)
         versionCode(1)
@@ -18,8 +23,8 @@ android {
         multiDexEnabled = true
 
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
+        consumerProguardFiles("consumer-rules.pro")
     }
-
 
     compileOptions {
         sourceCompatibility(JavaVersion.VERSION_1_8)
@@ -32,11 +37,22 @@ android {
         dataBinding = true
     }
 
+    sourceSets["main"].manifest.srcFile(
+        Module.selectManifest(Module.libIsApp)
+    )
+//    productFlavors{
+//
+//        register("app_test"){
+//
+//        }
+//
+//    }
+
     buildTypes {
         getByName("release") {
             minifyEnabled(false)
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -44,27 +60,20 @@ android {
 
 dependencies {
 
-    implementation(
-            fileTree(
-                    mapOf(
-                            "dir" to "libs",
-                            "include" to listOf("*.jar")
-                    )
-            )
-    )
-    implementation (kotlin(
-            "stdlib-jdk7",
-            org.jetbrains.kotlin.config.KotlinCompilerVersion.VERSION
-    ))
-
     implementation(Libs.kotlin_std)
     implementation(Libs.Android.core_ktx)
     implementation(Libs.Android.appcompat)
     implementation(Libs.Android.material)
     implementation(Libs.Android.constraint_layout)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
 
     testImplementation(Libs.Android.junit)
     androidTestImplementation(Libs.Android.test_junit)
     androidTestImplementation(Libs.Android.espresso_core)
+
 
 }

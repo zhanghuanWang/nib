@@ -1,11 +1,18 @@
-
-
 object Module {
-    private fun selectAppOrLib(isApp:Boolean) : String{
+    fun selectAppOrLib(isApp: Boolean): String {
         return if (isApp) {
             "com.android.application"
         } else {
             "com.android.library"
+        }
+    }
+
+    fun selectManifest(isApp: Boolean): String {
+
+        return if (isApp) {
+            "src/main/AppManifest.xml"
+        } else {
+            "src/main/AndroidManifest.xml"
         }
     }
 
@@ -15,8 +22,6 @@ object Module {
     const val libIsApp = true
 
     val libAppOrLib = selectAppOrLib(libIsApp)
-
-
 
 
 }
