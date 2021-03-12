@@ -1,8 +1,8 @@
 plugins {
-    id ("com.android.application")
-    id ("kotlin-android")
-    id ("kotlin-android-extensions")
-    id ("kotlin-kapt")
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
 }
 
 android {
@@ -40,22 +40,25 @@ android {
             )
         }
     }
+
 }
 
 dependencies {
 
     implementation(
-            fileTree(
-                    mapOf(
-                            "dir" to "libs",
-                            "include" to listOf("*.jar")
-                    )
+        fileTree(
+            mapOf(
+                "dir" to "libs",
+                "include" to listOf("*.jar")
             )
+        )
     )
-    implementation (kotlin(
+    implementation(
+        kotlin(
             "stdlib-jdk7",
             org.jetbrains.kotlin.config.KotlinCompilerVersion.VERSION
-    ))
+        )
+    )
 
     implementation(Libs.kotlin_std)
     implementation(Libs.Android.core_ktx)

@@ -1,3 +1,6 @@
+import java.text.SimpleDateFormat
+import java.util.*
+
 object Module {
     fun selectAppOrLib(isApp: Boolean): String {
         return if (isApp) {
@@ -15,7 +18,7 @@ object Module {
             "src/main/AndroidManifest.xml"
         }
     }
-
+    
     const val appApplicationId = "com.nibflow.narrator"
     const val libApplicationId = "com.nibflow.lib"
 
